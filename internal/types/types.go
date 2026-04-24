@@ -3,6 +3,23 @@
 
 package types
 
+// Error 错误响应
+func Error(code int, message string) *Response {
+	return &Response{
+		Code:    code,
+		Message: message,
+	}
+}
+
+// Success 成功响应
+func Success(data interface{}) *Response {
+	return &Response{
+		Code:    200,
+		Message: "success",
+		Data:    data,
+	}
+}
+
 type GetSignMsgRequest struct {
 	Address string `form:"address"`
 }
