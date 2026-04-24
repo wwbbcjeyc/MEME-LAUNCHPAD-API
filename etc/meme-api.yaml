@@ -1,0 +1,31 @@
+Name: meme-api
+Host: 0.0.0.0
+Port: 28888
+
+Log:
+  Level: info
+  Mode: console
+
+
+
+Auth:
+  AccessSecret: your-access-secret-key-change-in-production
+  AccessExpire: 86400  
+  RefreshExpire: 604800  
+
+
+#Database:
+#  Host: biz.mewkes.cn
+#  Port: 5432
+#  User: postgres
+#  Password: 5LHNYLCFfJwEpThB
+#  Name: metaland
+#  SSLMode: disable
+#  MaxOpenConns: 50
+#  MaxIdleConns: 10
+
+
+#Redis:
+#  Host: localhost:6379
+#  Pass: ""
+#  DB: 0

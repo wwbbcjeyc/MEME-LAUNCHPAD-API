@@ -1,0 +1,30 @@
+syntax = "v1"
+
+info (
+	title:   "Coinroll MEME Launchpad API"
+	desc:    "MEME代币发射平台后端API"
+	author:  "Coinroll Team"
+	version: "1.0.0"
+)
+
+import "types.api"
+
+// ==================== 无需认证的接口 ====================
+@server (
+	prefix: /api/v1
+	group:  user
+)
+service meme-api {
+	@doc "获取签名消息"
+	@handler GetSignMsg
+	get /user/sign-msg (GetSignMsgRequest) returns (Response)
+
+	@doc "钱包登录"
+	@handler WalletLogin
+	post /user/wallet-login (WalletLoginRequest) returns (Response)
+
+	@doc "刷新令牌"
+	@handler RefreshToken
+	post /user/refresh-token (RefreshTokenRequest) returns (Response)
+}
+

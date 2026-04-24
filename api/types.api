@@ -1,0 +1,58 @@
+syntax = "v1"
+
+// ==================== 通用类型 ====================
+
+type (
+	// 基础响应
+	Response {
+		Code    int         `json:"code"`
+		Message string      `json:"message"`
+		Data    interface{} `json:"data,omitempty"`
+	}
+)
+// ==================== 用户认证类型 ====================
+type (
+	// 获取签名消息请求
+	GetSignMsgRequest {
+		Address string `form:"address"`
+	}
+	
+	// 获取签名消息响应
+	GetSignMsgResponse {
+		Message string `json:"message"`
+		Nonce   string `json:"nonce"`
+		Expiry  int64  `json:"expiry"`
+	}
+	
+	// 钱包登录请求
+	WalletLoginRequest {
+		Address   string `json:"address"`
+		Signature string `json:"signature"`
+		Message   string `json:"message"`
+	}
+	
+	// 登录响应
+	LoginResponse {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+		ExpiresIn    int64  `json:"expiresIn"`
+		TokenType    string `json:"tokenType"`
+		User         *User  `json:"user"`
+	}
+
+    // 刷新令牌请求
+	RefreshTokenRequest {
+		RefreshToken string `json:"refreshToken"`
+	}
+	
+	// 用户信息
+	User {
+		ID        int64  `json:"id"`
+		Address   string `json:"address"`
+		Username  string `json:"username"`
+		Avatar    string `json:"avatar,omitempty"`
+		CreatedAt string `json:"createdAt"`
+		UpdatedAt string `json:"updatedAt"`
+	}
+	
+)
