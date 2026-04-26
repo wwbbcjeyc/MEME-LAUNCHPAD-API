@@ -30,12 +30,13 @@ type GetSignMsgResponse struct {
 	Expiry  int64  `json:"expiry"`
 }
 
+// LoginResponse 登录响应
 type LoginResponse struct {
-	Token        string `json:"token"`
-	RefreshToken string `json:"refreshToken"`
-	ExpiresIn    int64  `json:"expiresIn"`
-	TokenType    string `json:"tokenType"`
-	User         *User  `json:"user"`
+	Token        string      `json:"token"`
+	RefreshToken string      `json:"refreshToken"`
+	ExpiresIn    int64       `json:"expiresIn"`
+	TokenType    string      `json:"tokenType"`
+	User         interface{} `json:"user"`
 }
 
 type RefreshTokenRequest struct {

@@ -1,6 +1,3 @@
-// Code scaffolded by goctl. Safe to edit.
-// goctl 1.10.1
-
 package user
 
 import (
@@ -23,7 +20,6 @@ type GetSignMsgLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
-// 获取签名消息
 func NewGetSignMsgLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetSignMsgLogic {
 	return &GetSignMsgLogic{
 		Logger: logx.WithContext(ctx),
@@ -32,9 +28,7 @@ func NewGetSignMsgLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetSig
 	}
 }
 
-func (l *GetSignMsgLogic) GetSignMsg(req *types.GetSignMsgRequest) (resp *types.Response, err error) {
-	// todo: add your logic here and delete this line
-
+func (l *GetSignMsgLogic) GetSignMsg(req *types.GetSignMsgRequest) (*types.Response, error) {
 	address := strings.ToLower(req.Address)
 
 	// 验证地址格式
@@ -47,21 +41,25 @@ func (l *GetSignMsgLogic) GetSignMsg(req *types.GetSignMsgRequest) (resp *types.
 	if _, err := rand.Read(nonceBytes); err != nil {
 		return types.Error(500, "failed to generate nonce"), nil
 	}
-
 	nonce := hex.EncodeToString(nonceBytes)
 
+	// 设置过期时间 (5分钟)
 	expiry := time.Now().Add(5 * time.Minute).Unix()
 
+	// 构建签名消息
 	message := fmt.Sprintf(
 		"Welcome to Coinroll!\n\nClick to sign in and accept the Terms of Service.\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nWallet address:\n%s\n\nNonce:\n%s",
 		address,
 		nonce,
 	)
 
+	// 存储 nonce 到 Redis (用于后续验证)
+	cacheKey := fmt.Sprintf("sign_msg:%s", address)
+	l.svcCtx.Redis.Set(l.ctx, cacheKey, nonce, 5*time.Minute)
+
 	return types.Success(types.GetSignMsgResponse{
 		Message: message,
 		Nonce:   nonce,
 		Expiry:  expiry,
 	}), nil
-
 }

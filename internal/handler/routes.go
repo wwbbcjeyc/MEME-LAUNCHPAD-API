@@ -13,14 +13,12 @@ import (
 )
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
+
+	// ==================== 无需认证的接口 ====================
+
+	// User 相关 - 无需认证
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				// 刷新令牌
-				Method:  http.MethodPost,
-				Path:    "/user/refresh-token",
-				Handler: user.RefreshTokenHandler(serverCtx),
-			},
 			{
 				// 获取签名消息
 				Method:  http.MethodGet,
@@ -32,6 +30,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/user/wallet-login",
 				Handler: user.WalletLoginHandler(serverCtx),
+			},
+			{
+				// 刷新令牌
+				Method:  http.MethodPost,
+				Path:    "/user/refresh-token",
+				Handler: user.RefreshTokenHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/v1"),
