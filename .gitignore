@@ -1,0 +1,24 @@
+# 编译输出
+build/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 测试覆盖率
+*.out
+
+# IDE 配置（如果想保留在 IDE 中）
+.idea/
+.vscode/
+
+# 环境变量
+.env
+*.local
+
+# 日志文件
+*.log
+
+# 依赖管理（如果使用 vendor）
+vendor/

@@ -56,3 +56,199 @@ type (
 	}
 	
 )
+
+// ==================== 代币类型 ====================
+
+type (
+	// 代币列表请求
+	TokenListRequest {
+		PageNo          int    `form:"pn,default=1"`
+		PageSize        int    `form:"ps,default=10"`
+		Sort            string `form:"sort,optional"`
+		LaunchMode      int    `form:"lunchMode,optional"`
+		Status          string `form:"status,optional"`
+		LaunchTimeStart int64  `form:"launchTimeStart,optional"`
+		LaunchTimeEnd   int64  `form:"launchTimeEnd,optional"`
+	}
+
+	// 代币列表项
+	TokenListItem {
+		ID                      int64    `json:"id"`
+		Name                    string   `json:"name"`
+		Symbol                  string   `json:"symbol"`
+		Logo                    string   `json:"logo"`
+		Banner                  string   `json:"banner,omitempty"`
+		Desc                    string   `json:"desc,omitempty"`
+		Description             string   `json:"description,omitempty"`
+		TokenAddr               string   `json:"tokenAddr"`
+		LaunchMode              int      `json:"launchMode"`
+		LaunchTime              int64    `json:"launchTime"`
+		CurrentBnb              string   `json:"currentBnb"`
+		TargetBnb               string   `json:"targetBnb"`
+		MarginBnb               string   `json:"marginBnb,omitempty"`
+		ProgressPct             string   `json:"progressPct"`
+		MarketCap               string   `json:"marketCap"`
+		Hot                     int      `json:"hot"`
+		TokenLv                 int      `json:"tokenLv"`
+		TokenRank               int      `json:"tokenRank"`
+		Tags                    []string `json:"tags,omitempty"`
+		Website                 string   `json:"website,omitempty"`
+		Twitter                 string   `json:"twitter,omitempty"`
+		Telegram                string   `json:"telegram,omitempty"`
+		Discord                 string   `json:"discord,omitempty"`
+		PriceChangePercentage24H string  `json:"priceChangePercentage24H,omitempty"`
+		IsFavorite              bool     `json:"isFavorite"`
+		CreatedAt               string   `json:"createdAt"`
+	}
+
+	// 代币列表响应
+	TokenListResponse {
+		PageNo    int              `json:"pageNo"`
+		PageSize  int              `json:"pageSize"`
+		Total     int              `json:"total"`
+		TotalPage int              `json:"totalPage"`
+		Result    []*TokenListItem `json:"result"`
+	}
+
+	// 代币详情请求
+	TokenDetailRequest {
+		TokenAddress string `form:"tokenAddress"`
+	}
+
+	// 代币详情
+	TokenDetail {
+		ID                       int64    `json:"id"`
+		Name                     string   `json:"name"`
+		Symbol                   string   `json:"symbol"`
+		Logo                     string   `json:"logo"`
+		Banner                   string   `json:"banner,omitempty"`
+		Description              string   `json:"description,omitempty"`
+		TokenContractAddress     string   `json:"tokenContractAddress"`
+		CreatorAddress           string   `json:"creatorAddress"`
+		LaunchMode               int      `json:"launchMode"`
+		LaunchTime               int64    `json:"launchTime"`
+		BnbCurrent               string   `json:"bnbCurrent"`
+		BnbTarget                string   `json:"bnbTarget"`
+		CurrentPrice             string   `json:"currentPrice"`
+		CurrentPriceUsdt         string   `json:"currentPriceUsdt"`
+		MarketCap                string   `json:"marketCap"`
+		MarketCapUsdt            string   `json:"marketCapUsdt"`
+		ProgressPct              string   `json:"progressPct"`
+		TotalSupply              string   `json:"totalSupply"`
+		HoldersCount             int      `json:"holdersCount"`
+		BuyCount24H              int      `json:"buyCount24H"`
+		SellCount24H             int      `json:"sellCount24H"`
+		TotalVolume24H           string   `json:"totalVolume24H"`
+		PriceChangePercentage24H string   `json:"priceChangePercentage24H"`
+		Top10                    string   `json:"top10"`
+		TotalLock                string   `json:"totalLock"`
+		TurnoverRate             string   `json:"turnoverRate"`
+		Liquidity                float64  `json:"liquidity"`
+		Nonce                    int      `json:"nonce"`
+		SortPoints               int      `json:"sortPoints"`
+		IsFavorite               bool     `json:"isFavorite"`
+		Tags                     []string `json:"tags,omitempty"`
+		Website                  string   `json:"website,omitempty"`
+		Twitter                  string   `json:"twitter,omitempty"`
+		Telegram                 string   `json:"telegram,omitempty"`
+		Discord                  string   `json:"discord,omitempty"`
+		ContactEmail             string   `json:"contactEmail,omitempty"`
+		ContactTg                string   `json:"contactTg,omitempty"`
+	}
+
+	// 热门代币
+	HotPickToken {
+		TokenID     int64  `json:"tokenID"`
+		TokenName   string `json:"tokenName"`
+		TokenSymbol string `json:"tokenSymbol"`
+		TokenAddr   string `json:"tokenAddr"`
+		TokenLogo   string `json:"tokenLogo"`
+		TokenPrice  string `json:"tokenPrice"`
+		PriceChange string `json:"priceChange"`
+		MarketCap   string `json:"marketCap"`
+		IsFavorite  bool   `json:"isFavorite"`
+	}
+
+	// 代币持有者请求
+	TokenHoldersRequest {
+		TokenAddress string `form:"tokenAddress"`
+		PageNo       int    `form:"pn,default=1"`
+		PageSize     int    `form:"ps,default=10"`
+	}
+
+	// 代币持有者
+	TokenHolder {
+		Address    string `json:"address"`
+		Balance    string `json:"balance"`
+		Percentage string `json:"percentage"`
+	}
+
+	// 创建代币请求
+	CreateTokenRequest {
+		Name              string    `json:"name"`
+		Symbol            string    `json:"symbol"`
+		Description       string    `json:"description,optional"`
+		LaunchMode        int       `json:"launchMode"`
+		LaunchTime        int64     `json:"launchTime"`
+		Logo              string    `json:"logo"`
+		Banner            string    `json:"banner,optional"`
+		Website           string    `json:"website,optional"`
+		Twitter           string    `json:"twitter,optional"`
+		Telegram          string    `json:"telegram,optional"`
+		Discord           string    `json:"discord,optional"`
+		Whitepaper        string    `json:"whitepaper,optional"`
+		AdditionalLink2   string    `json:"additionalLink2,optional"`
+		Tags              []string  `json:"tags,optional"`
+		PreBuyPercent     float64   `json:"preBuyPercent"`
+		PreBuyUsedPercent []float64 `json:"preBuyUsedPercent,optional"`
+		PreBuyUsedType    []int     `json:"preBuyUsedType,optional"`
+		PreBuyLockTime    []float64 `json:"preBuyLockTime,optional"`
+		PreBuyUsedName    []string  `json:"preBuyUsedName,optional"`
+		PreBuyUsedDesc    []string  `json:"preBuyUsedDesc,optional"`
+		MarginBnb         float64   `json:"marginBnb"`
+		MarginTime        int64     `json:"marginTime"`
+		ContractTg        string    `json:"contractTg,optional"`
+		ContractEmail     string    `json:"contractEmail,optional"`
+		Digits            string    `json:"digits,optional"`
+		PredictedAddress  string    `json:"predictedAddress,optional"`
+		// IDO模式字段
+		TotalFundsRaised   float64 `json:"totalFundsRaised,optional"`
+		FundraisingCycle   float64 `json:"fundraisingCycle,optional"`
+		PreUserLimit       float64 `json:"preUserLimit,optional"`
+		UserLockupTime     float64 `json:"userLockupTime,optional"`
+		AddLiquidity       float64 `json:"addLiquidity,optional"`
+		ProtocolRevenue    float64 `json:"protocolRevenue,optional"`
+		CoreTeam           float64 `json:"coreTeam,optional"`
+		CommunityTreasury  float64 `json:"communityTreasury,optional"`
+		BuybackReserve     float64 `json:"buybackReserve,optional"`
+	}
+
+	// 创建代币响应
+	CreateTokenResponse {
+		Create2Salt      string `json:"create2Salt"`
+		CreateArg        string `json:"createArg"`
+		Nonce            int    `json:"nonce"`
+		PredictedAddress string `json:"predictedAddress"`
+		RequestID        string `json:"requestId"`
+		Signature        string `json:"signature"`
+		Timestamp        int64  `json:"timestamp"`
+	}
+
+	// 计算地址请求
+	CalculateAddressRequest {
+		Name   string `json:"name"`
+		Symbol string `json:"symbol"`
+		Digits string `json:"digits,optional"`
+	}
+
+	// 计算地址响应
+	CalculateAddressResponse {
+		PredictedAddress string `json:"predictedAddress"`
+		Salt             string `json:"salt"`
+	}
+
+	// 收藏代币请求
+	FavoriteTokenRequest {
+		TokenID int64 `json:"tokenId"`
+	}
+)
