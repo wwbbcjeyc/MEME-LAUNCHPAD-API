@@ -63,3 +63,4 @@ func (l *GetSignMsgLogic) GetSignMsg(req *types.GetSignMsgRequest) (*types.Respo
 		Expiry:  expiry,
 	}), nil
 }
+

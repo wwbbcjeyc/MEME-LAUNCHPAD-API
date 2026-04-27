@@ -7,6 +7,7 @@ import (
 
 	"meme-launchpad-api/internal/svc"
 	"meme-launchpad-api/internal/types"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -192,4 +193,3 @@ func (l *GetKlineHistoryLogic) GetKlineHistory(req *types.KlineHistoryRequest) (
 
 	return types.Success(response), nil
 }
-

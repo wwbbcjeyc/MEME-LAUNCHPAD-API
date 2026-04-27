@@ -101,3 +101,4 @@ func NewAuthError(message string) *AuthError {
 func (e *AuthError) Error() string {
 	return e.Message
 }
+

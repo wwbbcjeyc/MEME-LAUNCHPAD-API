@@ -19,7 +19,7 @@ type RefreshTokenLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
-// 刷新令牌
+
 func NewRefreshTokenLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RefreshTokenLogic {
 	return &RefreshTokenLogic{
 		Logger: logx.WithContext(ctx),
@@ -81,7 +81,6 @@ func (l *RefreshTokenLogic) RefreshToken(req *types.RefreshTokenRequest) (*types
 	}), nil
 }
 
-
 func (l *RefreshTokenLogic) generateAccessToken(userID int64, address string) (string, error) {
 	claims := jwt.MapClaims{
 		"userId":  userID,
@@ -106,3 +105,4 @@ func (l *RefreshTokenLogic) generateRefreshToken(userID int64, address string) (
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(l.svcCtx.Config.Auth.AccessSecret))
 }
+

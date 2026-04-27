@@ -17,7 +17,9 @@ import (
 	"meme-launchpad-api/internal/types"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/jackc/pgx/v5"
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -28,7 +30,6 @@ type WalletLoginLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
-// 钱包登录
 func NewWalletLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *WalletLoginLogic {
 	return &WalletLoginLogic{
 		Logger: logx.WithContext(ctx),
@@ -37,8 +38,7 @@ func NewWalletLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Walle
 	}
 }
 
-func (l *WalletLoginLogic) WalletLogin(req *types.WalletLoginRequest) (resp *types.Response, err error) {
-
+func (l *WalletLoginLogic) WalletLogin(req *types.WalletLoginRequest) (*types.Response, error) {
 	address := strings.ToLower(req.Address)
 
 	// 验证地址格式
@@ -123,54 +123,6 @@ func (l *WalletLoginLogic) WalletLogin(req *types.WalletLoginRequest) (resp *typ
 	}), nil
 }
 
-// verifySignature 验证以太坊签名
-//func verifySignature(address, message, signature string) bool {
-//	// 添加以太坊签名前缀
-//	prefix := fmt.Sprintf("\x19Ethereum Signed Message:\n%d", len(message))
-//	prefixedMessage := prefix + message
-//
-//	// 计算消息哈希
-//	hash := crypto.Keccak256Hash([]byte(prefixedMessage))
-//
-//	// 解码签名
-//	sigBytes, err := hexutil.Decode(signature)
-//	if err != nil {
-//		return false
-//	}
-//
-//	// 调整 v 值
-//	if len(sigBytes) != 65 {
-//		return false
-//	}
-//	if sigBytes[64] >= 27 {
-//		sigBytes[64] -= 27
-//	}
-//
-//	// 恢复公钥
-//	pubKey, err := crypto.SigToPub(hash.Bytes(), sigBytes)
-//	if err != nil {
-//		return false
-//	}
-//
-//	// 从公钥获取地址
-//	recoveredAddress := crypto.PubkeyToAddress(*pubKey)
-//
-//	// 比较地址
-//	return strings.EqualFold(recoveredAddress.Hex(), address)
-//}
-
-// -- 临时禁用签名验证，测试阶段直接返回 true
-func verifySignature(address, message, signature string) bool {
-	// TODO: 测试时直接返回 true
-	return true // 临时禁用签名验证
-}
-
-func generateNonce() string {
-	nonceBytes := make([]byte, 16)
-	rand.Read(nonceBytes)
-	return hex.EncodeToString(nonceBytes)
-}
-
 func (l *WalletLoginLogic) generateAccessToken(user *model.User) (string, error) {
 	claims := jwt.MapClaims{
 		"userId":  user.ID,
@@ -181,13 +133,6 @@ func (l *WalletLoginLogic) generateAccessToken(user *model.User) (string, error)
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(l.svcCtx.Config.Auth.AccessSecret))
-}
-
-func shortenAddress(address string) string {
-	if len(address) < 10 {
-		return address
-	}
-	return address[:6] + "..." + address[len(address)-4:]
 }
 
 func (l *WalletLoginLogic) generateRefreshToken(user *model.User) (string, error) {
@@ -203,6 +148,56 @@ func (l *WalletLoginLogic) generateRefreshToken(user *model.User) (string, error
 	return token.SignedString([]byte(l.svcCtx.Config.Auth.AccessSecret))
 }
 
+// verifySignature 验证以太坊签名
+func verifySignature(address, message, signature string) bool {
+	// 添加以太坊签名前缀
+	prefix := fmt.Sprintf("\x19Ethereum Signed Message:\n%d", len(message))
+	prefixedMessage := prefix + message
+
+	// 计算消息哈希
+	hash := crypto.Keccak256Hash([]byte(prefixedMessage))
+
+	// 解码签名
+	sigBytes, err := hexutil.Decode(signature)
+	if err != nil {
+		return false
+	}
+
+	// 调整 v 值
+	if len(sigBytes) != 65 {
+		return false
+	}
+	if sigBytes[64] >= 27 {
+		sigBytes[64] -= 27
+	}
+
+	// 恢复公钥
+	pubKey, err := crypto.SigToPub(hash.Bytes(), sigBytes)
+	if err != nil {
+		return false
+	}
+
+	// 从公钥获取地址
+	recoveredAddress := crypto.PubkeyToAddress(*pubKey)
+
+	// 比较地址
+	return strings.EqualFold(recoveredAddress.Hex(), address)
+}
+
+func generateNonce() string {
+	nonceBytes := make([]byte, 16)
+	rand.Read(nonceBytes)
+	return hex.EncodeToString(nonceBytes)
+}
+
+func shortenAddress(address string) string {
+	if len(address) < 10 {
+		return address
+	}
+	return address[:6] + "..." + address[len(address)-4:]
+}
+
+// 用于确保地址格式正确
 func _(address string) common.Address {
 	return common.HexToAddress(address)
 }

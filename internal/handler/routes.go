@@ -10,6 +10,7 @@ import (
 	"meme-launchpad-api/internal/middleware"
 	"meme-launchpad-api/internal/svc"
 	"meme-launchpad-api/internal/types"
+
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
@@ -789,4 +790,3 @@ func checkRebateRecordStatusHandler(svcCtx *svc.ServiceContext) http.HandlerFunc
 		httpx.OkJsonCtx(r.Context(), w, types.Success(hasPending))
 	}
 }
-

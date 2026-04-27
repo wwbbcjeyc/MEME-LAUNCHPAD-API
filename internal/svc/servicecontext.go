@@ -6,26 +6,42 @@ package svc
 import (
 	"context"
 	"fmt"
-	"meme-launchpad-api/internal/config"
-	"meme-launchpad-api/internal/model"
+	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	"meme-launchpad-api/internal/config"
+	"meme-launchpad-api/internal/model"
+	"meme-launchpad-api/internal/service/chain"
+	"meme-launchpad-api/internal/service/cos"
+	tokenservice "meme-launchpad-api/internal/service/token"
 	"github.com/redis/go-redis/v9"
 )
 // 服务上下文
 type ServiceContext struct {
 	Config config.Config
 
+	// 数据库
 	DB *pgxpool.Pool
 
+	// Redis
 	Redis *redis.Client
 
 	// Models
-	UserModel *model.UserModel
+	UserModel     *model.UserModel
+	TokenModel    *model.TokenModel
+	TradeModel    *model.TradeModel
+	KlineModel    *model.KlineModel
+	CommentModel  *model.CommentModel
+	ActivityModel *model.ActivityModel
+	InviteModel   *model.InviteModel
+
+	// Services
+	TokenService *tokenservice.TokenService
+	EventService *chain.EventService
+	CosService   *cos.CosService
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-
 	// 初始化数据库连接
 	dbURL := fmt.Sprintf(
 		"postgres://%s:%s@%s:%d/%s?sslmode=%s",
@@ -62,10 +78,53 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		fmt.Printf("Warning: Failed to connect to Redis: %v\n", err)
 	}
 
+	// 初始化 Models
+	tokenModel := model.NewTokenModel(db)
+	tradeModel := model.NewTradeModel(db)
+
+	log.Println("SignerPrivateKey: ", c.SignerPrivateKey)
+
+	// 初始化 Services
+	tokenService := tokenservice.NewTokenService(
+		c.SignerPrivateKey,
+		c.Chain.CoreContract,
+		c.Chain.FactoryContract,
+		c.Chain.TokenBytecode,
+		c.Chain.RPC,
+		c.Chain.ChainID,
+		tokenModel,
+	)
+
+	eventService := chain.NewEventService(
+		c.Chain.RPC,
+		c.Chain.CoreContract,
+		tokenModel,
+		tradeModel,
+	)
+
+	// 初始化 COS 服务
+	var cosService *cos.CosService
+	if c.Cos.SecretID != "" && c.Cos.SecretKey != "" {
+		cosService = cos.NewCosService(c)
+	}
+
 	return &ServiceContext{
-		Config:    c,
-		DB:        db,
-		Redis:     rdb,
-		UserModel: model.NewUserModel(db),
+		Config: c,
+		DB:     db,
+		Redis:  rdb,
+
+		// 初始化 Models
+		UserModel:     model.NewUserModel(db),
+		TokenModel:    tokenModel,
+		TradeModel:    tradeModel,
+		KlineModel:    model.NewKlineModel(db),
+		CommentModel:  model.NewCommentModel(db),
+		ActivityModel: model.NewActivityModel(db),
+		InviteModel:   model.NewInviteModel(db),
+
+		// 初始化 Services
+		TokenService: tokenService,
+		EventService: eventService,
+		CosService:   cosService,
 	}
 }

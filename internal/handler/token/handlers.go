@@ -28,7 +28,6 @@ func GetTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取代币详情
 func GetTokenDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.TokenDetailRequest
@@ -47,7 +46,6 @@ func GetTokenDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取热门代币
 func GetHotPickHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := token.NewGetHotPickLogic(r.Context(), svcCtx)
@@ -60,7 +58,6 @@ func GetHotPickHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取趋势代币
 func GetTrendingTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.TokenListRequest
@@ -79,7 +76,6 @@ func GetTrendingTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取代币持有者
 func GetTokenHoldersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.TokenHoldersRequest
@@ -98,7 +94,6 @@ func GetTokenHoldersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 创建代币
 func CreateTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.CreateTokenRequest
@@ -117,7 +112,6 @@ func CreateTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 计算代币地址
 func CalculateAddressHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.CalculateAddressRequest
@@ -136,7 +130,6 @@ func CalculateAddressHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 收藏代币
 func FavoriteTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.FavoriteTokenRequest
@@ -155,7 +148,6 @@ func FavoriteTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 取消收藏代币
 func UnfavoriteTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.FavoriteTokenRequest
@@ -174,7 +166,6 @@ func UnfavoriteTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取我的IDO列表币
 func GetMyIdoListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.MyTokenListRequest
@@ -193,7 +184,6 @@ func GetMyIdoListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取我的创建的代币
 func GetMyCreatedTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.MyTokenListRequest
@@ -212,7 +202,6 @@ func GetMyCreatedTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取我的代币列表
 func GetMyOwnedTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.MyTokenListRequest
@@ -231,7 +220,6 @@ func GetMyOwnedTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取我的收藏的代币
 func GetMyFavoriteTokensHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.MyTokenListRequest
@@ -250,7 +238,6 @@ func GetMyFavoriteTokensHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取排名代币列表
 func GetRankingTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.RankingTokenListRequest
@@ -269,7 +256,6 @@ func GetRankingTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取概览排名代币列表
 func GetOverviewRankingsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.OverviewRankingsRequest
@@ -288,7 +274,6 @@ func GetOverviewRankingsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取高级代币列表
 func GetAdvancedTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.AdvancedTokenListRequest
@@ -307,7 +292,6 @@ func GetAdvancedTokenListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
-// 获取交易排名代币列表
 func GetTradeRankingsListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.RankingTokenListRequest

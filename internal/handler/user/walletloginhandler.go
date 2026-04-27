@@ -6,10 +6,11 @@ package user
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"meme-launchpad-api/internal/logic/user"
 	"meme-launchpad-api/internal/svc"
 	"meme-launchpad-api/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 // 钱包登录

@@ -50,15 +50,15 @@ Storage:
   Endpoint: ""
   CDNDomain: https://assets.coinroll.io
 
-# 签名私钥 (用于生成合约签名) - 生产环境使用环境变量
-SignerPrivateKey: "${SIGNER_PRIVATE_KEY}"
+# 签名私钥 (用于生成合约签名)
+SignerPrivateKey: xxxxxxxxxxxxxxxxxx
 
 Cos:
-  SecretID: "${TENCENT_CLOUD_SECRET_ID}"
-  SecretKey: "${TENCENT_CLOUD_SECRET_KEY}"
+  SecretID: "XXXXXXXXXXXXXXXXXXXXXXXXX"
+  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxx"
   Bucket: "metaland-1389986750"
   Region: "ap-shanghai"
   AppID: "1389986750"
-  Domain: "http://upload.metanode.tech"  # 自定义域名
+  Domain: "http://upload.metanode.tech"  # 可选，自定义域名
 
   

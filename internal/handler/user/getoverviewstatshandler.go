@@ -1,6 +1,3 @@
-// Code scaffolded by goctl. Safe to edit.
-// goctl 1.10.1
-
 package user
 
 import (
@@ -13,17 +10,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-// 刷新令牌
-func RefreshTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetOverviewStatsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.RefreshTokenRequest
+		var req types.OverviewStatsRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := user.NewRefreshTokenLogic(r.Context(), svcCtx)
-		resp, err := l.RefreshToken(&req)
+		l := user.NewGetOverviewStatsLogic(r.Context(), svcCtx)
+		resp, err := l.GetOverviewStats(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
