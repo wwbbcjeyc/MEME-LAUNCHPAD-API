@@ -13,7 +13,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/zeromicro/go-zero/core/logx"
 )
-
+// RefreshTokenLogic 刷新 token逻辑
 type RefreshTokenLogic struct {
 	logx.Logger
 	ctx    context.Context

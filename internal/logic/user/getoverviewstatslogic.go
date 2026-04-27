@@ -6,15 +6,18 @@ import (
 	"meme-launchpad-api/internal/middleware"
 	"meme-launchpad-api/internal/svc"
 	"meme-launchpad-api/internal/types"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
+// GetOverviewStatsLogic 获取用户概览统计逻辑
 type GetOverviewStatsLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
+// NewGetOverviewStatsLogic 创建用户概览统计逻辑
 func NewGetOverviewStatsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetOverviewStatsLogic {
 	return &GetOverviewStatsLogic{
 		Logger: logx.WithContext(ctx),
@@ -43,4 +46,3 @@ func (l *GetOverviewStatsLogic) GetOverviewStats(req *types.OverviewStatsRequest
 
 	return types.Success(stats), nil
 }
-

@@ -9,7 +9,7 @@ import (
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
-
+// GetOverviewStatsHandler 获取用户概览统计
 func GetOverviewStatsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.OverviewStatsRequest

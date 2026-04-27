@@ -24,6 +24,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
+// WalletLoginLogic 钱包登录逻辑
 type WalletLoginLogic struct {
 	logx.Logger
 	ctx    context.Context

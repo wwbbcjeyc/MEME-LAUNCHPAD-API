@@ -13,7 +13,7 @@ import (
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
-
+// GetSignMsgLogic 获取签名消息逻辑
 type GetSignMsgLogic struct {
 	logx.Logger
 	ctx    context.Context
